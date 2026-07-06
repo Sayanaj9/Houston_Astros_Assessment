@@ -25,32 +25,30 @@
   }
 }
 
-.filter-section {
-}
+.filter-section {}
 
-.filter-controls {
-}
+.filter-controls {}
 
 .filter-row {
+  display: flex;
+  gap: 1rem;
 }
 
-.filter-group {
-}
+.filter-group {}
 
-.filter-group label {
-}
+.filter-group label {}
 
-.filter-group select {
-}
+.filter-group select {}
 
-.data-section {
-}
+.data-section {}
 
-.player-table {
-}
+.player-table {}
 
 .table-container {
   overflow-x: auto;
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
 }
 
 .player-table table {

@@ -28,7 +28,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
     );
   }
 
-  if (players.length === 0) {
+  if (players?.length === 0) {
     return (
       <div className="player-table">
         <div className="no-data">No players found.</div>
@@ -38,7 +38,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
 
   return (
     <div className="player-table">
-      <h2>Players ({players.length} players)</h2>
+      <h2>Players ({players?.length} players)</h2>
 
       {/* TODO: Implement player table */}
       <div className="table-container">
@@ -46,12 +46,17 @@ const PlayerTable: React.FC<PlayerTableProps> = ({
           <thead>
             <tr>
               <th>Name</th>
+              <th>Team</th>
+              <th>Position</th>
+
             </tr>
           </thead>
           <tbody>
-            {players.map((player, index) => (
+            {players?.map((player: {}, index: number) => (
               <tr key={index}>
-                <td>{/* player.name */}</td>
+                <td>{`${player?.first_name} ${player?.last_name}`}</td>
+                <td>{player?.team} </td>
+                <td>{player?.primary_position} </td>
               </tr>
             ))}
           </tbody>

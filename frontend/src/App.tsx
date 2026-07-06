@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Player, PlayerFilterOptions } from "./types";
 import PlayerFilterControls from "./components/PlayerFilterControls";
@@ -11,8 +11,24 @@ const App: React.FC = () => {
   const [availableTeams, setAvailableTeams] = useState<string[]>([]);
   const [availablePositions, setAvailablePositions] = useState<string[]>([]);
 
-  const handleFilterChange = (filters: PlayerFilterOptions) => {};
+  const handleFilterChange = (filters: PlayerFilterOptions) => {
 
+  };
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetch('http://localhost:5001/players').then((res) => res.json())
+      .then((data) => {
+        let teams = data.filter((player) => player?.team)
+        let position = data.filter((player) => player?.primary_position)
+        setAvailableTeams(teams)
+        setAvailablePositions(position)
+        setPlayers(data)
+      })
+      .catch((err) => setError(err));
+    setIsLoading(false)
+
+  }, [])
   return (
     <div className="App">
       <header>
