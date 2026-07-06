@@ -27,6 +27,10 @@ class TestHealthCheck:
     def test_health_check(self, client):
         """Test that health check returns 200 status."""
         # TODO: Implement health check test
+        response = client.get("/health")
+
+        assert response.status_code == 200
+        assert response.get_json() == {"status": "healthy"}
         pass
 
 
@@ -40,24 +44,43 @@ class TestPlayerAPI:
         # 1. Insert test data into database
         # 2. Make GET request to /api/players
         # 3. Assert correct response format and data
+        response = client.get("/players")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert isinstance(data, list)
+        assert len(data) > 0
         pass
 
     def test_filter_players_by_team(self, client):
         """Test filtering players by team."""
         # TODO: Implement test for team filtering
+        response = client.get("/players?team=TOR")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert isinstance(data, list)
+        assert len(data) > 0
+        for player in data:
+            assert player["team"] == "TOR"
         pass
 
     def test_filter_players_by_position(self, client):
         """Test filtering players by position."""
         # TODO: Implement test for position filtering
+        response = client.get("/players?primary_position=RHS")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert isinstance(data, list)
+        assert len(data) > 0
+        for player in data:
+            assert player["primary_position"] == "RHS"
         pass
 
-    def test_get_player_by_id(self, client):
-        """Test getting a specific player by ID."""
-        # TODO: Implement test for single player retrieval
-        pass
+    # def test_get_player_by_id(self, client):
+    #     """Test getting a specific player by ID."""
+    #     # TODO: Implement test for single player retrieval
+    #     pass
 
-    def test_get_nonexistent_player(self, client):
-        """Test getting a player that doesn't exist."""
-        # TODO: Implement test for 404 response
-        pass
+    # def test_get_nonexistent_player(self, client):
+    #     """Test getting a player that doesn't exist."""
+    #     # TODO: Implement test for 404 response
+    #     pass
