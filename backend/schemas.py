@@ -69,3 +69,4 @@ class PitchSchema(Schema):
     # Teams
     home_team = fields.String(allow_none=True)
     away_team = fields.String(allow_none=True)
+    player_name = fields.String(allow_none=True)

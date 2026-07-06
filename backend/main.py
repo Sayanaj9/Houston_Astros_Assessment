@@ -92,6 +92,7 @@ class Pitch(db.Model):
     # Teams
     home_team = db.Column(db.String, nullable=True)
     away_team = db.Column(db.String, nullable=True)
+    player_name=db.Column(db.String, nullable=True)
 
 
 # Routes
@@ -110,14 +111,14 @@ def get_players():
     team = request.args.get('team')
     position = request.args.get('primary_position')
     query = Player.query
-    if(team):
+    if team:
         query =query.filter_by(team=team)
-    if(position):
+    if position :
         query = query.filter_by(primary_position=position)
 
-    query = query.all()
+    player = query.all()
     schema = PlayerSchema(many=True)
-    result = schema.dump(query)
+    result = schema.dump(player)
     return jsonify(result), 200
   
 @app.route("/pitches", methods=["GET"])
@@ -126,8 +127,21 @@ def get_pitches():
     Get all pitches or filter by various fields such as player, team, date, etc.
     """
     # TODO: Implement pitch retrieval with optional filtering
-    # Below is a simple example returning a subset of pitches
-    pitches = Pitch.query.limit(1000).all()
+    playerName = request.args.get('player_name')
+    gameDate = request.args.get('game_date')
+    homeTeam = request.args.get('home_team')
+    awayTeam = request.args.get('away_team')
+    query = Pitch.query
+    if playerName:
+            query =query.filter_by(player_name=playerName)
+    if gameDate:
+            query = query.filter_by(game_date=gameDate)
+    if homeTeam:
+            query = query.filter_by(home_team=homeTeam)
+    if awayTeam:
+            query = query.filter_by(away_team=awayTeam)
+
+    pitches = query.all()
     schema = PitchSchema(many=True)
     result = schema.dump(pitches)
 
