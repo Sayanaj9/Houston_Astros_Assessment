@@ -12,7 +12,25 @@ const App: React.FC = () => {
   const [availablePositions, setAvailablePositions] = useState<string[]>([]);
 
   const handleFilterChange = (filters: PlayerFilterOptions) => {
-
+    setIsLoading(true)
+    let team = filters?.team
+    let position = filters?.position
+    if (!filters?.team) {
+      team = ''
+    }
+    if (!filters?.position) {
+      position = ''
+    }
+    fetch(`http://localhost:5001/players?team=${team}&primary_position=${position}`).then((res) => res.json())
+      .then((data) => {
+        let teams = data.filter((player) => player?.team)
+        let position = data.filter((player) => player?.primary_position)
+        setAvailableTeams(teams)
+        setAvailablePositions(position)
+        setPlayers(data)
+      })
+      .catch((err) => setError(err));
+    setIsLoading(false)
   };
 
   useEffect(() => {

@@ -1,3 +1,5 @@
+
+
 import React, { useState, ChangeEvent } from "react";
 import { PlayerFilterOptions } from "../types";
 
@@ -6,30 +8,43 @@ interface PlayerFilterControlsProps {
   availableTeams?: string[];
   availablePositions?: string[];
 }
-
 const PlayerFilterControls: React.FC<PlayerFilterControlsProps> = ({
   onFilterChange,
   availableTeams = [],
   availablePositions = [],
 }) => {
   const [filters, setFilters] = useState<PlayerFilterOptions>({});
-
   const handleTeamChange = (event: ChangeEvent<HTMLSelectElement>) => {
     // TODO: Implement team filter change handler
+    const newFilters = {
+      ...filters,
+      team: event.target.value,
+    };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
   };
-
   const handlePositionChange = (event: ChangeEvent<HTMLSelectElement>) => {
     // TODO: Implement position filter change handler
+    const newFilters = {
+      ...filters,
+      position: event.target.value,
+    };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
   };
-
   const clearFilters = () => {
     // TODO: Implement clear filters functionality
-  };
+    const newFilters = {
 
+      team: '',
+      position: '',
+    };
+    setFilters({})
+    onFilterChange(newFilters)
+  };
   return (
     <div className="filter-controls">
       <h3>Filter Players</h3>
-
       <div className="filter-row">
         {/* TODO: Team filter dropdown */}
         <div className="filter-group">
@@ -39,11 +54,12 @@ const PlayerFilterControls: React.FC<PlayerFilterControlsProps> = ({
             value={filters.team || ""}
             onChange={handleTeamChange}
           >
-            <option value="">All Teams</option>
+            {availableTeams?.map(({ team }) => (
+              <option value={team}>{team}</option>
+            ))}
             {/* TODO: Render team options from availableTeams */}
           </select>
         </div>
-
         {/* TODO: Position filter dropdown */}
         <div className="filter-group">
           <label htmlFor="position-filter">Position:</label>
@@ -52,11 +68,12 @@ const PlayerFilterControls: React.FC<PlayerFilterControlsProps> = ({
             value={filters.position || ""}
             onChange={handlePositionChange}
           >
-            <option value="">All Positions</option>
+            {availablePositions?.map(({ primary_position }) => (
+              <option value={primary_position}>{primary_position}</option>
+            ))}
             {/* TODO: Render position options from availablePositions */}
           </select>
         </div>
-
         {/* TODO: Clear filters button */}
         <button onClick={clearFilters} className="clear-filters">
           Clear Filters
@@ -67,3 +84,5 @@ const PlayerFilterControls: React.FC<PlayerFilterControlsProps> = ({
 };
 
 export default PlayerFilterControls;
+
+
