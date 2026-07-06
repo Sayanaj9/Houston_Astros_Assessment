@@ -107,12 +107,19 @@ def get_players():
     Get all players or filter by team/position.
     """
     # TODO: Implement player retrieval with optional filtering
-    # Below is a simple example returning a subset of players
-    pitches = Player.query.limit(1000).all()
-    schema = PlayerSchema(many=True)
-    result = schema.dump(pitches)
-    return jsonify(result), 200
+    team = request.args.get('team')
+    position = request.args.get('primary_position')
+    query = Player.query
+    if(team):
+        query =query.filter_by(team=team)
+    if(position):
+        query = query.filter_by(primary_position=position)
 
+    query = query.all()
+    schema = PlayerSchema(many=True)
+    result = schema.dump(query)
+    return jsonify(result), 200
+  
 @app.route("/pitches", methods=["GET"])
 def get_pitches():
     """
