@@ -1,7 +1,7 @@
 
 
 import React, { useState, ChangeEvent } from "react";
-import { PlayerFilterOptions } from "../types";
+import { PlayerFilterOptions } from "../../types";
 
 interface PlayerFilterControlsProps {
   onFilterChange: (filters: PlayerFilterOptions) => void;

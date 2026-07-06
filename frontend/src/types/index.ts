@@ -11,3 +11,7 @@ export interface Pitch {
 export interface PlayerFilterOptions {
   // TODO: Define filter options for player queries
 }
+
+export interface PitchFilterOptions {
+  // TODO: Define filter options for player queries
+}
