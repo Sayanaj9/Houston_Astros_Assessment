@@ -171,9 +171,9 @@ Update this README to note the features you completed as a part of your submissi
 
 ### Completed
 
-- [ ] REST API for player and pitch data access
-- [ ] Player and pitch data table with filtering
-- [ ] Unit/integration tests
+- [ *] REST API for player and pitch data access
+- [ *] Player and pitch data table with filtering
+- [ *] Unit/integration tests
 
 ## Database
 
@@ -279,3 +279,9 @@ Don't worry about:
 ## Questions or Issues
 
 If you encounter any setup issues or have questions about the requirements, please include them in your submission documentation.
+### Additional Notes
+
+- Implemented REST API endpoints for players and pitches with filtering support.
+- Added React tables and filter controls for both players and pitches.
+- Added loading, empty, and error states for API requests.
+- Added backend API tests.
