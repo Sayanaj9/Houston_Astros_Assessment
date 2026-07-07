@@ -115,11 +115,15 @@ def get_players():
         query =query.filter_by(team=team)
     if position :
         query = query.filter_by(primary_position=position)
+    try:
+        player = query.all()
+        schema = PlayerSchema(many=True)
+        result = schema.dump(player)
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    player = query.all()
-    schema = PlayerSchema(many=True)
-    result = schema.dump(player)
-    return jsonify(result), 200
+    
   
 @app.route("/pitches", methods=["GET"])
 def get_pitches():
@@ -140,9 +144,11 @@ def get_pitches():
             query = query.filter_by(home_team=homeTeam)
     if awayTeam:
             query = query.filter_by(away_team=awayTeam)
+    try:
+        pitches = query.all()
+        schema = PitchSchema(many=True)
+        result = schema.dump(pitches)
 
-    pitches = query.all()
-    schema = PitchSchema(many=True)
-    result = schema.dump(pitches)
-
-    return jsonify(result), 200
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

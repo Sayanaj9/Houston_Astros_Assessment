@@ -59,7 +59,13 @@ const App: React.FC = () => {
     if (!filters?.position) {
       position = ''
     }
-    fetch(`http://localhost:5001/players?team=${team}&primary_position=${position}`).then((res) => res.json())
+    fetch(`http://localhost:5001/players?team=${team}&primary_position=${position}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch players");
+        }
+        return res.json()
+      })
       .then((data) => {
         let teams = data.filter((player) => player?.team)
         let position = data.filter((player) => player?.primary_position)
@@ -67,12 +73,14 @@ const App: React.FC = () => {
         setAvailablePositions(position)
         setPlayers(data)
       })
-      .catch((err) => setError(err));
+      .catch((err) => setError(err?.message))
+      .finally(() => setIsLoading(false))
+
     setIsLoading(false)
   };
   //handling filter chnages of Pitch Table
   const handlePitchesFilterChange = (filters: PitchFilterOptions) => {
-    setIsLoading(true)
+    setIsPitchesLoading(true)
     let name = filters?.name
     let away_team = filters?.away_team
     if (!filters?.name) {
@@ -81,16 +89,22 @@ const App: React.FC = () => {
     if (!filters?.away_team) {
       away_team = ''
     }
-    fetch(`http://localhost:5001/pitches?away_team=${away_team}&player_name=${name}`).then((res) => res.json())
+    fetch(`http://localhost:5001/pitches?away_team=${away_team}&player_name=${name}`).then((res) => {
+      if (!res.ok) {
+        throw new Error("Failed to fetch players");
+      }
+      return res.json()
+    })
       .then((data) => {
-        let names = data.filter((pitch) => pitch?.name)
+        let names = data.filter((pitch) => pitch?.player_name)
         let away_team = data.filter((pitch) => pitch?.away_team)
         setAvailablePlayerName(names)
         setAvailableAwayTeam(away_team)
         setPitches(data)
       })
-      .catch((err) => setError(err));
-    setIsLoading(false)
+      .catch((err) => setError(err?.message))
+      .finally(() => setIsPitchesLoading(false))
+
   };
   return (
     <div className="App">

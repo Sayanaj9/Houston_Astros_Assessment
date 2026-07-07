@@ -54,8 +54,8 @@ const PlayerFilterControls: React.FC<PlayerFilterControlsProps> = ({
             value={filters.team || ""}
             onChange={handleTeamChange}
           >
-            {availableTeams?.map(({ team }) => (
-              <option value={team}>{team}</option>
+            {availableTeams?.map(({ team }, index) => (
+              <option value={team} key={index}>{team}</option>
             ))}
             {/* TODO: Render team options from availableTeams */}
           </select>
@@ -68,8 +68,8 @@ const PlayerFilterControls: React.FC<PlayerFilterControlsProps> = ({
             value={filters.position || ""}
             onChange={handlePositionChange}
           >
-            {availablePositions?.map(({ primary_position }) => (
-              <option value={primary_position}>{primary_position}</option>
+            {availablePositions?.map(({ primary_position }, index) => (
+              <option value={primary_position} key={index}>{primary_position}</option>
             ))}
             {/* TODO: Render position options from availablePositions */}
           </select>

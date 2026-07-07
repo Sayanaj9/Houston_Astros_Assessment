@@ -54,8 +54,8 @@ const PitchFilterControls: React.FC<PitchFilterControlsProps> = ({
             value={filters.team || ""}
             onChange={handlePlayerChange}
           >
-            {availablePlayerName?.map((player) => (
-              <option value={player?.player_name}>{player?.player_name}</option>
+            {availablePlayerName?.map((player, index) => (
+              <option value={player?.player_name} key={index}>{player?.player_name}</option>
             ))}
             {/* TODO: Render team options from availableTeams */}
           </select>
@@ -68,8 +68,8 @@ const PitchFilterControls: React.FC<PitchFilterControlsProps> = ({
             value={filters.position || ""}
             onChange={handleAwayTeamChange}
           >
-            {availableAwayTeam?.map((away) => (
-              <option value={away?.away_team}>{away?.away_team}</option>
+            {availableAwayTeam?.map((away, index) => (
+              <option value={away?.away_team} key={index}>{away?.away_team}</option>
             ))}
             {/* TODO: Render position options from availablePositions */}
           </select>

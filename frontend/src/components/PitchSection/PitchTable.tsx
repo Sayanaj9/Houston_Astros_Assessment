@@ -9,9 +9,10 @@ interface PitchTableProps {
 
 const PitchTable: React.FC<PitchTableProps> = ({
   pitches,
-  isLoading = false,
+  isLoading = true,
   error,
 }) => {
+
   if (isLoading) {
     return (
       <div className="player-table">
@@ -28,7 +29,7 @@ const PitchTable: React.FC<PitchTableProps> = ({
     );
   }
 
-  if (pitches?.length === 0) {
+  if (!isLoading && pitches?.length === 0) {
     return (
       <div className="player-table">
         <div className="no-data">No pitch found.</div>
